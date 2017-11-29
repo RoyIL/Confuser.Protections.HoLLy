@@ -36,7 +36,7 @@ namespace Confuser.Protections.HoLLy.Runtime.AntiMemoryEditing
             switch (currentvalue.GetType().Name.ToString().ToLower())
             {
                 case "string":
-                    return (T)(object)XorString(s.ToString(), salt);
+                    return (T)(object)XorString(currentvalue.ToString(), salt);
                 case "int":
                     return (T)(object)(int.Parse(currentvalue.ToString()) ^ salt);
                 case "double":
