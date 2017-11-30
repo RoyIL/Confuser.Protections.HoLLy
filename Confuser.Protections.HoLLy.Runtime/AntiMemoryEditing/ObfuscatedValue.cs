@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 
 namespace Confuser.Protections.HoLLy.Runtime.AntiMemoryEditing
@@ -11,8 +11,8 @@ namespace Confuser.Protections.HoLLy.Runtime.AntiMemoryEditing
 
         public T Value
         {
-            get {return Obfuscate(_val, true);}
-            set { _val = Obfuscate(value, false);}
+            get => Obfuscate(_val, true);
+            set => _val = Obfuscate(value, false);
         }
 
         public ObfuscatedValue(T val)
@@ -33,16 +33,16 @@ namespace Confuser.Protections.HoLLy.Runtime.AntiMemoryEditing
         {
             Type type = currentvalue.GetType();
 
-            switch (currentvalue.GetType().Name.ToString().ToLower())
+            switch (currentvalue)
             {
-                case "string":
-                    return (T)(object)XorString(currentvalue.ToString(), salt);
-                case "int":
-                    return (T)(object)(int.Parse(currentvalue.ToString()) ^ salt);
-                case "double":
-                    return (T)(object)(double.Parse(currentvalue.ToString()) * (reverse ? 1.0 / salt : salt));
-                case "float":
-                    return (T)(object)(float.Parse(currentvalue.ToString()) * (reverse ? 1f / salt : salt));
+                case string s:
+                    return (T)(object)XorString(s, salt);
+                case int i:
+                    return (T)(object)(i ^ salt);
+                case double d:
+                    return (T)(object)(d * (reverse ? 1.0 / salt : salt));
+                case float f:
+                    return (T)(object)(f * (reverse ? 1f / salt : salt));
                 default:
                     if (type.BaseType == typeof(Enum))
                         return (T)(object)((int)Convert.ChangeType(currentvalue, typeof(int)) ^ salt);
